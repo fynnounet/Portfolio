@@ -3,7 +3,10 @@ const cors = require('cors');
 const session = require('express-session');
 require('dotenv').config();
 
+const connectMongo = require('./mongo');
 const authRoutes = require('./routes/auth');
+const projetsRoutes = require('./routes/projets');
+const messagesRoutes = require('./routes/messages');
 const app = express();
 const port = Number(process.env.PORT) || 3000;
 const configuredClientUrl = process.env.CLIENT_URL;
@@ -29,7 +32,22 @@ app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok' });
 });
 app.use('/api', authRoutes);
+app.use('/api', projetsRoutes);
+app.use('/api', messagesRoutes);
 
-app.listen(port, () => {
-  console.log(`Serveur lance sur http://localhost:${port}`);
-});
+async function start() {
+  try {
+    await connectMongo();
+  } catch (err) {
+    console.error(
+      'MongoDB indisponible pour le moment, les routes /api/messages ne fonctionneront pas :',
+      err.message
+    );
+  }
+
+  app.listen(port, () => {
+    console.log(`Serveur lance sur http://localhost:${port}`);
+  });
+}
+
+start();

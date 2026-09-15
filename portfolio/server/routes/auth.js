@@ -2,9 +2,18 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const { body, validationResult } = require('express-validator');
-const pool = require('../database');
+const User = require('../models/User');
 
 const SALT_ROUNDS = 10;
+
+function toSessionUser(user) {
+  return {
+    id: user._id,
+    nom_utilisateur: user.nom_utilisateur,
+    email: user.email,
+    role: user.role,
+  };
+}
 
 // ----------------------
 // INSCRIPTION
@@ -27,32 +36,24 @@ router.post(
     const { nom, email, password } = req.body;
 
     try {
-      const [existing] = await pool.query(
-        'SELECT id FROM utilisateurs WHERE email = ?',
-        [email]
-      );
-      if (existing.length > 0) {
+      const existant = await User.findOne({ email });
+      if (existant) {
         return res.status(409).json({ message: 'Cet email est déjà utilisé.' });
       }
 
       const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
 
-      const [result] = await pool.query(
-        'INSERT INTO utilisateurs (nom_utilisateur, email, mot_de_passe, role) VALUES (?, ?, ?, ?)',
-        [nom, email, hashedPassword, 'utilisateur']
-      );
-
-      const user = {
-        id: result.insertId,
+      const user = await User.create({
         nom_utilisateur: nom,
         email,
+        mot_de_passe: hashedPassword,
         role: 'utilisateur',
-      };
+      });
 
-      // On connecte automatiquement l'utilisateur après inscription.
-      req.session.user = user;
+      const sessionUser = toSessionUser(user);
+      req.session.user = sessionUser;
 
-      return res.status(201).json({ message: 'Inscription réussie.', user });
+      return res.status(201).json({ message: 'Inscription réussie.', user: sessionUser });
     } catch (err) {
       console.error("Erreur lors de l'inscription :", err.message);
       return res.status(500).json({ message: 'Erreur serveur, réessayez plus tard.' });
@@ -78,32 +79,22 @@ router.post(
     const { email, password } = req.body;
 
     try {
-      const [rows] = await pool.query(
-        'SELECT * FROM utilisateurs WHERE email = ?',
-        [email]
-      );
+      const utilisateur = await User.findOne({ email });
 
-      if (rows.length === 0) {
+      if (!utilisateur) {
         return res.status(401).json({ message: 'Identifiants incorrects.' });
       }
 
-      const utilisateur = rows[0];
       const match = await bcrypt.compare(password, utilisateur.mot_de_passe);
 
       if (!match) {
         return res.status(401).json({ message: 'Identifiants incorrects.' });
       }
 
-      const user = {
-        id: utilisateur.id,
-        nom_utilisateur: utilisateur.nom_utilisateur,
-        email: utilisateur.email,
-        role: utilisateur.role,
-      };
+      const sessionUser = toSessionUser(utilisateur);
+      req.session.user = sessionUser;
 
-      req.session.user = user;
-
-      return res.status(200).json({ message: 'Connexion réussie.', user });
+      return res.status(200).json({ message: 'Connexion réussie.', user: sessionUser });
     } catch (err) {
       console.error('Erreur lors de la connexion :', err.message);
       return res.status(500).json({ message: 'Erreur serveur, réessayez plus tard.' });
@@ -134,15 +125,4 @@ router.get('/me', (req, res) => {
   return res.status(200).json({ user: req.session.user });
 });
 
-// ----------------------
-// MIDDLEWARE ADMIN (à utiliser sur de futures routes protégées, ex: /api/admin/*)
-// ----------------------
-function requireAdmin(req, res, next) {
-  if (req.session.user?.role !== 'admin') {
-    return res.status(403).json({ message: 'Accès réservé aux administrateurs.' });
-  }
-  next();
-}
-
 module.exports = router;
-module.exports.requireAdmin = requireAdmin;
