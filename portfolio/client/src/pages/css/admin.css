@@ -1,0 +1,140 @@
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.admin-muted {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 13px;
+}
+
+.admin-tabs {
+  display: flex;
+  gap: 8px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 20px;
+}
+
+.admin-tab {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 10px 16px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+}
+.admin-tab:hover {
+  color: #fff;
+}
+.admin-tab-active {
+  color: #7f77dd;
+  border-bottom-color: #7f77dd;
+}
+
+.admin-info {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 13px;
+  padding: 16px 0;
+}
+
+.admin-erreur {
+  color: #f0997b;
+  background: rgba(240, 153, 123, 0.08);
+  border: 1px solid rgba(240, 153, 123, 0.25);
+  border-radius: 4px;
+  padding: 8px 10px;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.admin-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 640px;
+}
+
+.admin-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 16px 18px;
+}
+.admin-card-non-lu {
+  border-left: 3px solid #7f77dd;
+}
+
+.admin-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.admin-sujet {
+  font-size: 13px;
+  color: #7f77dd;
+  margin-bottom: 6px;
+}
+
+.admin-contenu {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.6;
+  margin-bottom: 12px;
+  white-space: pre-wrap;
+}
+
+.admin-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.admin-btn-danger {
+  color: #f0997b;
+  border-color: rgba(240, 153, 123, 0.3);
+}
+.admin-btn-danger:hover {
+  border-color: #f0997b;
+  color: #fff;
+}
+
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 480px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+.admin-form input,
+.admin-form textarea,
+.admin-form select {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  color: #e8e6e1;
+  padding: 8px 10px;
+  font-size: 13px;
+  font-family: inherit;
+}
+.admin-form-row {
+  display: flex;
+  gap: 10px;
+}
+.admin-form-row select {
+  flex: 2;
+}
+.admin-form-row input {
+  flex: 1;
+}

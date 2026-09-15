@@ -2,11 +2,12 @@
   "name": "portfolio-server",
   "version": "1.0.0",
   "private": true,
-  "description": "Backend Express + MySQL pour l'authentification du portfolio",
+  "description": "Backend Express + MongoDB pour le portfolio",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "node --watch app.js"
+    "dev": "node --watch app.js",
+    "seed:admin": "node seed-admin.js"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
@@ -15,7 +16,6 @@
     "express": "^5.2.1",
     "express-session": "^1.19.0",
     "express-validator": "^7.2.1",
-    "mongoose": "^9.10.0",
-    "mysql2": "^3.24.4"
+    "mongoose": "^9.10.0"
   }
 }

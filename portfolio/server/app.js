@@ -39,10 +39,8 @@ async function start() {
   try {
     await connectMongo();
   } catch (err) {
-    console.error(
-      'MongoDB indisponible pour le moment, les routes /api/messages ne fonctionneront pas :',
-      err.message
-    );
+    console.error('Impossible de se connecter à MongoDB, le serveur ne peut pas démarrer sans base de données :', err.message);
+    process.exit(1);
   }
 
   app.listen(port, () => {

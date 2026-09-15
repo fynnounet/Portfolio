@@ -1,13 +1,22 @@
 {
-  "name": "portfolio-frontend-fixed",
+  "name": "portfolio-frontend",
   "version": "1.0.0",
   "private": true,
-  "workspaces": [
-    "frontend"
-  ],
+  "type": "module",
   "scripts": {
-    "dev": "npm --workspace frontend run dev",
-    "build": "npm --workspace frontend run build",
-    "preview": "npm --workspace frontend run preview"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "oxlint"
+  },
+  "dependencies": {
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-router-dom": "^7.18.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.1.0",
+    "oxlint": "^1.79.0",
+    "vite": "^8.2.2"
   }
 }
