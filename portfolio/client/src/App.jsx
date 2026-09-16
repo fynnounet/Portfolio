@@ -7,7 +7,6 @@ import Page1 from "./pages/projets.jsx";
 import Page2 from "./pages/informations.jsx";
 import Page3 from "./pages/contact.jsx";
 import Page4 from "./pages/connexion.jsx";
-import Page5 from "./pages/inscription.jsx";
 
 const projects = [
   {
@@ -245,7 +244,6 @@ export default function App() {
           <Route path="/informations" element={<Page2 />} />
           <Route path="/contact" element={<Page3 />} />
           <Route path="/connexion" element={<Page4 />} />
-          <Route path="/inscription" element={<Page5 />} />
           <Route
             path="/admin"
             element={

@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const profilRoutes = require('./routes/profil_route');
 const session = require('express-session');
 require('dotenv').config();
 
@@ -34,6 +35,7 @@ app.get('/api/health', (_req, res) => {
 app.use('/api', authRoutes);
 app.use('/api', projetsRoutes);
 app.use('/api', messagesRoutes);
+app.use('/api', profilRoutes);
 
 async function start() {
   try {

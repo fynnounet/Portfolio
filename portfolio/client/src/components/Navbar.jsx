@@ -26,11 +26,6 @@ export default function Navbar() {
             Connexion
           </NavLink>
         )}
-        {!user && (
-          <NavLink to="/inscription" className={({ isActive }) => (isActive ? "active" : "")}>
-            Inscription
-          </NavLink>
-        )}
         {user?.role === "admin" && (
           <NavLink to="/admin" className={({ isActive }) => (isActive ? "active" : "")}>
             Admin

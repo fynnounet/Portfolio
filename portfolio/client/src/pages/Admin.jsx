@@ -2,11 +2,12 @@ import { useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
 import AdminMessages from "./admin/AdminMessages.jsx";
 import AdminProjets from "./admin/AdminProjets.jsx";
+import AdminProfil from "./admin/AdminProfil.jsx";
 import "./css/admin.css";
 
 export default function Admin() {
   const { user, logout } = useAuth();
-  const [onglet, setOnglet] = useState("messages"); // messages | projets
+  const [onglet, setOnglet] = useState("messages"); // messages | projets | profil
 
   return (
     <div style={{ padding: "40px 32px" }}>
@@ -35,9 +36,17 @@ export default function Admin() {
         >
           Projets
         </button>
+        <button
+          className={`admin-tab ${onglet === "profil" ? "admin-tab-active" : ""}`}
+          onClick={() => setOnglet("profil")}
+        >
+          Profil
+        </button>
       </div>
 
-      {onglet === "messages" ? <AdminMessages /> : <AdminProjets />}
+      {onglet === "messages" && <AdminMessages />}
+      {onglet === "projets" && <AdminProjets />}
+      {onglet === "profil" && <AdminProfil />}
     </div>
   );
 }

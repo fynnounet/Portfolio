@@ -110,15 +110,6 @@ export default function Connexion() {
           {chargement ? "Connexion..." : "Se connecter"}
         </button>
       </form>
-
-      <p
-        style={{
-          marginTop: 16,
-          fontSize: 13,
-        }}
-      >
-        Pas encore de compte ? <Link to="/inscription">S'inscrire</Link>
-      </p>
     </div>
   );
 }
