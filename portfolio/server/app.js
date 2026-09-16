@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const profilRoutes = require('./routes/profil_route');
+const profilRoutes = require('./routes/profil');
 const session = require('express-session');
 require('dotenv').config();
 
