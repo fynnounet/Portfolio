@@ -4,9 +4,18 @@ const { body, validationResult } = require('express-validator');
 const Message = require('../models/Message');
 const requireAdmin = require('../middleware/requireAdmin');
 
+const limiteurMessages = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: 'Trop de messages envoyés, réessaie un peu plus tard.' },
+});
+
 // ----------------------
 // CRÉER (formulaire de contact, public)
 // ----------------------
+
 router.post(
   '/messages',
   [
@@ -51,6 +60,7 @@ router.post(
 // ----------------------
 // LISTER (admin uniquement)
 // ----------------------
+
 router.get('/messages', requireAdmin, async (_req, res) => {
   try {
     const messages = await Message.find().sort({ date_envoi: -1 });
@@ -64,6 +74,7 @@ router.get('/messages', requireAdmin, async (_req, res) => {
 // ----------------------
 // METTRE À JOUR — ex: marquer comme lu/non lu (admin uniquement)
 // ----------------------
+
 router.patch('/messages/:id', requireAdmin, async (req, res) => {
   const { lu } = req.body;
 
@@ -92,6 +103,7 @@ router.patch('/messages/:id', requireAdmin, async (req, res) => {
 // ----------------------
 // SUPPRIMER (admin uniquement)
 // ----------------------
+
 router.delete('/messages/:id', requireAdmin, async (req, res) => {
   try {
     const message = await Message.findByIdAndDelete(req.params.id);

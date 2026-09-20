@@ -11,23 +11,38 @@ export default function Navbar() {
       </NavLink>
 
       <div className="nav-links">
-        <NavLink to="/projets" className={({ isActive }) => (isActive ? "active" : "")}>
+        <NavLink
+          to="/projets"
+          className={({ isActive }) => (isActive ? "active" : "")}
+        >
           Projets
         </NavLink>
-        <NavLink to="/informations" className={({ isActive }) => (isActive ? "active" : "")}>
+        <NavLink
+          to="/informations"
+          className={({ isActive }) => (isActive ? "active" : "")}
+        >
           Informations
         </NavLink>
-        <NavLink to="/contact" className={({ isActive }) => (isActive ? "active" : "")}>
+        <NavLink
+          to="/contact"
+          className={({ isActive }) => (isActive ? "active" : "")}
+        >
           Contact
         </NavLink>
 
         {!user && (
-          <NavLink to="/connexion" className={({ isActive }) => (isActive ? "active" : "")}>
+          <NavLink
+            to="/connexion"
+            className={({ isActive }) => (isActive ? "active" : "")}
+          >
             Connexion
           </NavLink>
         )}
         {user?.role === "admin" && (
-          <NavLink to="/admin" className={({ isActive }) => (isActive ? "active" : "")}>
+          <NavLink
+            to="/admin"
+            className={({ isActive }) => (isActive ? "active" : "")}
+          >
             Admin
           </NavLink>
         )}
@@ -38,7 +53,9 @@ export default function Navbar() {
         )}
       </div>
 
-      <div className="status-pill">Disponible</div>
+      <div className="text-[11px] bg-[#1d9e75]/10 text-[#5dcaa5] py-1 px-3 rounded-full border border-[#1d9e75] tracking-[0.04em]">
+        Disponible
+      </div>
     </nav>
   );
 }

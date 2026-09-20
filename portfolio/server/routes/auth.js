@@ -6,6 +6,14 @@ const User = require('../models/User');
 
 const SALT_ROUNDS = 10;
 
+const limiteurConnexion = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: 'Trop de tentatives de connexion, réessaie dans quelques minutes.' },
+});
+
 function toSessionUser(user) {
   return {
     id: user._id,
