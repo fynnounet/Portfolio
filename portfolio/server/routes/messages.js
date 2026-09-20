@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const rateLimit = require('express-rate-limit');
 const { body, validationResult } = require('express-validator');
 const Message = require('../models/Message');
 const requireAdmin = require('../middleware/requireAdmin');
